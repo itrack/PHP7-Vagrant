@@ -18,10 +18,9 @@ Features:
 3. edit your hosts file add two lines:  
 tool.dev    192.168.33.10  
 app.dev     192.168.33.10
-4. vagrant reload
+4. "vagrant reload"
 
 # usage
-open your broswer and goto
 1. http://tool.dev/phpMyAdmin to phpMyAdmin
 2. http://app.dev to your project home (web root is set to "share/www/", you can change it in "share/nginx/conf.d/vhosts.conf")  
 
