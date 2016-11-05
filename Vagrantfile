@@ -14,6 +14,25 @@ if not plugins_to_install.empty?
   end
 end
 
+# System detect
+module OS
+  def OS.windows?
+    (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil
+  end
+
+  def OS.mac?
+    (/darwin/ =~ RUBY_PLATFORM) != nil
+  end
+
+  def OS.unix?
+    !OS.windows?
+  end
+
+  def OS.linux?
+    OS.unix? and not OS.mac?
+  end
+end
+
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
@@ -52,7 +71,11 @@ Vagrant.configure(2) do |config|
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
   
-  config.vm.synced_folder "./share", "/vagrant", type: "nfs"
+  if OS.windows?
+      config.vm.synced_folder "./share", "/vagrant", type: "virtualbox"
+  else
+      config.vm.synced_folder "./share", "/vagrant", type: "nfs"
+  end
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
